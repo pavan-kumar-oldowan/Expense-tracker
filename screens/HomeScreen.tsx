@@ -1,11 +1,13 @@
 import {View,Text,StyleSheet} from "react-native";
 import React from "react";
 import { useExpense } from "@/context/ExpenseContext";
+import ExpenseForm from "@/components/ExpenseForm";
 const HomeScreen:React.FC =()=>{
      const {expense} = useExpense();
        return(
           <View style={styles.container}>
             <Text style={styles.title}>Expense-tracker</Text>
+            <ExpenseForm/>
             <Text>Total Records:{expense.length}</Text>
           </View>
        )
