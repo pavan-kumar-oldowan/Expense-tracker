@@ -1,18 +1,22 @@
 import React from "react";
-import {View,Text,StyleSheet} from "react-native";
+import {View,Text,StyleSheet, TouchableOpacity} from "react-native";
 
 import { Expense } from "@/types/expense";
+import { useExpense } from "@/context/ExpenseContext";
 
 interface ExpenseItemProp{
     item :Expense;
 }
  
  const ExpenseItem:React.FC<ExpenseItemProp>=({item})=>{
-        
+       const {deleteExpense} = useExpense(); 
     return(
         <View style={[styles.item,item.type==="income"?styles.income:styles.expense]} >
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.amount}>{item.type==="income"?"+":"-"}₹{item.amount}</Text>
+            <TouchableOpacity onPress={()=>{deleteExpense(item.id)}}>
+                <Text style={styles.delete}>Delete</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -28,6 +32,10 @@ const styles=StyleSheet.create({
     },
     income: {
     backgroundColor: '#d3f9d8',
+    },
+    delete:{
+      color:"red",
+      fontWeight:"bold"
     },
     expense: {
     backgroundColor: '#ffe3e3',
