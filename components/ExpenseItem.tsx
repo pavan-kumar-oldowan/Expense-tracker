@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{memo}from "react";
 import {View,Text,StyleSheet, TouchableOpacity} from "react-native";
 
 import { Expense } from "@/types/expense";
@@ -20,7 +20,7 @@ interface ExpenseItemProp{
         </View>
     )
 }
-export default ExpenseItem
+export default memo(ExpenseItem)
 const styles=StyleSheet.create({
      
     item:{

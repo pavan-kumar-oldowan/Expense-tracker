@@ -1,4 +1,4 @@
-import {View,Text,StyleSheet,FlatList} from "react-native";
+import {View,Text,StyleSheet,FlatList,ScrollView} from "react-native";
 import React,{useState} from "react";
 import { useExpense } from "@/context/ExpenseContext";
 import ExpenseForm from "@/components/ExpenseForm";
@@ -7,7 +7,10 @@ import ExpenseItem from "@/components/ExpenseItem";
 import BalanceSummary from "@/components/BalanceSummary";
 import { calculateTotals } from "@/utility/helpers";
 import  {fillterByMonth}  from  "../utility/dataHelpers";
-import MonthSelector from "../components/MonthSelector"
+import MonthSelector from "../components/MonthSelector";
+import ExpenseChart from "@/components/ExpenseChart";
+ import EmptyState from '../components/EmptyState';
+//import { ScrollView } from "react-native-reanimated/lib/typescript/Animated";
 const HomeScreen:React.FC =()=>{
    const {expense} = useExpense();
   
@@ -17,15 +20,20 @@ const HomeScreen:React.FC =()=>{
           const {income,expens,Balance} = calculateTotals(filterdExpenses)
        return(
           <View style={styles.container}>
+            <ScrollView>
             <Text style={styles.title}>Expense-tracker</Text>
             <MonthSelector month={month} setMonth={setMonth}></MonthSelector>
             <BalanceSummary income={income} expens={expens} Balance={Balance}/>
+            <ExpenseChart income={income} expense={expens} />
+
             <ExpenseForm/>
             <FlatList 
                data={expense}
                keyExtractor={(item)=>item.id}
                renderItem={({item})=><ExpenseItem item={item}/>}
+               ListEmptyComponent={<EmptyState />}
             />
+            </ScrollView>
           </View>
        )
 }
