@@ -1,5 +1,5 @@
 
-import { createContext, useContext,useState } from "react";
+import { createContext, useContext,useState,useCallback} from "react";
 import React,{useEffect}  from "react";
 import { Expense } from "@/types/expense";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -47,9 +47,9 @@ export const ExpenseProvider:React.FC<{children:React.ReactNode}> = (
             setExpense((prev)=>[...prev,expense]);
       };
 
-      const deleteExpense = (id:string)=>{
+      const deleteExpense = useCallback((id:string)=>{
          setExpense((prev)=>prev.filter((item)=>item.id!==id));
-      }
+      },[])
     
     return(
         <ExpenseContext.Provider value={{expense,addExpense,deleteExpense}}>
